@@ -25,18 +25,46 @@ public class MainActivity extends AppCompatActivity {
 
         TextView scoreA = findViewById(R.id.textView3);
         TextView scoreB = findViewById(R.id.textView4);
-
+        TextView errorMessage = findViewById(R.id.errorView);
 
         Button b1 = (Button) findViewById(R.id.button);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isTeamASelected){
+                    errorMessage.setVisibility(errorMessage.INVISIBLE);
                     currentPointA += currentPoint;
                     scoreA.setText(""+currentPointA);
                 } else  {
+                    errorMessage.setVisibility(errorMessage.INVISIBLE);
                     currentPointB += currentPoint;
                     scoreB.setText(""+currentPointB);
+                }
+            }
+        });
+
+        Button b2 = (Button) findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isTeamASelected){
+                    if (currentPointA > 0) {
+                        errorMessage.setVisibility(errorMessage.INVISIBLE);
+                        currentPointA -= currentPoint;
+                        scoreA.setText("" + currentPointA);
+                    }
+                    else {
+                        errorMessage.setVisibility(errorMessage.VISIBLE);
+                        errorMessage.setText("Score cannot be in negative");
+                    }
+                } else if (currentPointB > 0) {
+                    errorMessage.setVisibility(errorMessage.VISIBLE);
+                    currentPointB -= currentPoint;
+                    scoreB.setText("" + currentPointB);
+                }
+                else {
+                    errorMessage.setVisibility(errorMessage.VISIBLE);
+                        errorMessage.setText("Score cannot be in negative");
                 }
             }
         });
